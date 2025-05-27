@@ -1,3 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  :root {
+    --text: #0a0d1a;
+    --background: #f4f5fb;
+    --primary: #203274;
+    --secondary: #788ede;
+    --accent: #2a4dcb;
+  }
+  .dark {
+    --text: #e4e8f5;
+    --background: #04050b;
+    --primary: #8b9ddf;
+    --secondary: #213789;
+    --accent: #3456d5;
+  }
+}
+/* Hide scrollbar for dropdown */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* Animation for input box warning */
+@layer utilities {
+  .animate-fade-in-down {
+    animation: fadeInDown 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+  .animate-shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+  }
+  @keyframes shake {
+    10%, 90% { transform: translateX(-1px); }
+    20%, 80% { transform: translateX(2px); }
+    30%, 50%, 70% { transform: translateX(-4px); }
+    40%, 60% { transform: translateX(4px); }
+  }
+}
