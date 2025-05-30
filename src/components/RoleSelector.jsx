@@ -37,7 +37,7 @@ export default function RoleSelector({ selectedRole, onChange }) {
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative font-body font-normal text-md" ref={dropdownRef}>
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-2 text-white px-4 py-2 pl-6 rounded-md min-w-[160px] transition focus:outline-none focus:ring-2 focus:ring-accent"

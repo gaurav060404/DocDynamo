@@ -1,4 +1,4 @@
-export default function WebSearchBox({ urls, setUrls, onProcessUrls }) {
+export default function WebSearchBox({ urls, setUrls, onProcessUrls , theme }) {
   const handleUrlChange = (idx, value) => {
     const newUrls = [...urls];
     newUrls[idx] = value;
@@ -20,14 +20,14 @@ export default function WebSearchBox({ urls, setUrls, onProcessUrls }) {
         <input
           key={idx}
           type="text"
-          className="bg-background2 border border-primary rounded px-3 py-2 text-text placeholder-gray-400"
+          className={`border border-primary rounded px-3 py-2 text-text ${theme == 'dark' ? 'bg-[#0e1328]' : 'bg-[#e1e4ee]'} placeholder-text focus:border-accent`}
           placeholder="Enter PDF/DOCX URL"
           value={url}
           onChange={e => handleUrlChange(idx, e.target.value)}
         />
       ))}
       <button
-        className="flex items-center gap-2 bg-background2 border border-accent text-accent px-3 py-2 rounded font-medium hover:bg-accent/10 transition"
+        className={`flex items-center gap-2 ${theme == 'dark' ? 'bg-[#0e1328] text-text' : 'bg-[#2A4DCB] text-white'} border border-accent px-3 py-2 rounded font-medium hover:bg-accent/30 transition`}
         onClick={handleAddUrl}
       >
         <span>➕</span> Add Another URL

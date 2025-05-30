@@ -2,9 +2,9 @@ import { useState } from "react";
 import RoleSelector from "./RoleSelector";
 import { FaGraduationCap } from "react-icons/fa";
 import { IoIosSend } from "react-icons/io";
-import { GiBrain } from "react-icons/gi";
+import brainIcon from "../assets/brain.svg";
 
-export default function MainPanel() {
+export default function MainPanel({ theme, toggleTheme }) {
   const [role, setRole] = useState({
     label: "Student",
     icon: <FaGraduationCap />,
@@ -45,13 +45,41 @@ export default function MainPanel() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start px-6 pt-12 w-full h-full text-text bg-background2 overflow-hidden">
+    <div className="flex flex-col items-center justify-start px-6 pt-12 w-full h-full text-text bg-background overflow-hidden">
+      {/* Theme Toggle Button */}
+      <button
+        className={`absolute top-4 right-6 px-4 py-2 rounded-full transition flex items-center gap-2 ${
+          theme === "dark"
+            ? "bg-gradient-to-r from-gray-800 to-gray-700 text-white hover:from-gray-700 hover:to-gray-600"
+            : "bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-500"
+        }`}
+        onClick={toggleTheme}
+      >
+        {theme === "dark" ? (
+          <>
+            <span role="img" aria-label="moon">
+              🌙
+            </span>
+            Light Mode
+          </>
+        ) : (
+          <>
+            <span role="img" aria-label="sun">
+              ☀️
+            </span>
+            Dark Mode
+          </>
+        )}
+      </button>
+
       <div className="text-center mt-6">
-        <h1 className="text-4xl font-heading font-bold text-purple-400 flex justify-center items-center gap-5">
-          <GiBrain className="text-pink-400 text-5xl" />
+        <h1 className="text-[58px] font-heading font-bold text-accent flex justify-center items-center gap-2">
+          <div className="p-4">
+            <img src={brainIcon} alt="Brain Icon" className="h-[80px]" />
+          </div>
           DocDynamo
         </h1>
-        <p className="text-gray-400 mt-5 mb-8 text-lg font-heading font-semibold">
+        <p className="mt-5 mb-8 text-lg font-heading font-semibold">
           AI-Powered Document Intelligence
         </p>
       </div>
@@ -60,14 +88,14 @@ export default function MainPanel() {
         <input
           type="text"
           value={input}
-          onChange={e => {
+          onChange={(e) => {
             setInput(e.target.value);
             setInputWarning("");
           }}
           placeholder="Ask anything about your documents..."
           className={`bg-transparent flex-1 outline-none text-white placeholder-gray-500`}
         />
-        {/* Warning appears above the input */} 
+        {/* Warning appears above the input */}
         {inputWarning && (
           <div className="absolute left-6 -top-10 flex items-center gap-2 bg-red-500/90 text-white text-xs px-3 py-1 rounded shadow animate-fade-in-down z-20">
             <svg
@@ -106,7 +134,7 @@ export default function MainPanel() {
       </div>
 
       {/* Button Row */}
-      <div className="flex flex-wrap justify-center gap-4 mt-8 relative">
+      <div className="flex flex-wrap justify-center gap-4 mt-8 relative font-heading font-semibold">
         {[
           {
             icon: "🧐 Questions",
@@ -128,7 +156,7 @@ export default function MainPanel() {
           <button
             key={btn.icon}
             className="relative group bg-[#2b2b40] hover:bg-[#3c3c56] text-white px-5 py-2 rounded-full transition"
-            onMouseMove={e => handleMouseMove(e, btn.tooltip)}
+            onMouseMove={(e) => handleMouseMove(e, btn.tooltip)}
             onMouseLeave={handleMouseLeave}
           >
             {btn.icon}

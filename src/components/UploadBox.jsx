@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FiUploadCloud } from "react-icons/fi";
 
-export default function UploadBox({ onProcessFiles }) {
+export default function UploadBox({ onFilesSelected, onProcessFiles }) {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState([]);
   const [warning, setWarning] = useState("");
@@ -12,9 +12,11 @@ export default function UploadBox({ onProcessFiles }) {
     if (arr.length > 5) {
       setWarning("You can upload a maximum of 5 files.");
       setFiles(arr.slice(0, 5));
+      if (onFilesSelected) onFilesSelected(arr.slice(0, 5));
     } else {
       setWarning("");
       setFiles(arr);
+      if (onFilesSelected) onFilesSelected(arr);
     }
   };
 
@@ -47,11 +49,11 @@ export default function UploadBox({ onProcessFiles }) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center mt-4">
       <div
         className={`border-2 ${
           dragActive ? "border-accent" : "border-primary"
-        } hover:border-accent rounded-md p-6 mb-4 text-center h-[250px] w-[350px] bg-background2 transition-colors duration-200 flex flex-col justify-center items-center relative`}
+        } hover:border-accent hover:bg-box rounded-md p-6 mb-4 text-center h-[250px] w-[350px] bg-background transition-colors duration-200 flex flex-col justify-center items-center relative`}
         onDragEnter={handleDrag}
         onDragOver={handleDrag}
         onDragLeave={handleDrag}
@@ -97,7 +99,7 @@ export default function UploadBox({ onProcessFiles }) {
         )}
       </div>
       <button
-        className="mt-3 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white px-4 py-2 w-4/5 rounded flex items-center justify-center gap-2 font-semibold transition"
+        className="mt-3 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white px-4 py-2 w-4/5 rounded flex items-center justify-center gap-2 font-semibold transition cursor-pointer"
         disabled={files.length === 0}
         onClick={handleProcess}
       >

@@ -3,21 +3,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@layer base {
-  :root {
-    --text: #0a0d1a;
-    --background: #f4f5fb;
-    --primary: #203274;
-    --secondary: #788ede;
-    --accent: #2a4dcb;
-  }
-  .dark {
-    --text: #e4e8f5;
-    --background: #04050b;
-    --primary: #8b9ddf;
-    --secondary: #213789;
-    --accent: #3456d5;
-  }
+/* Light & Dark Mode */
+:root[data-theme="light"] {
+  --text: #0a0d1a;
+  --background: #f4f5fb;
+  --primary: #203274;
+  --secondary: #788ede;
+  --accent: #2a4dcb;
+  --upload-box : #E5E7EE;
+}
+
+:root[data-theme="dark"] {
+  --text: #e5e8f5;
+  --background: #04050b;
+  --primary: #8b9ddf;
+  --secondary: #213787;
+  --accent: #3457d5;
+  --upload-box : #0a1028;
 }
 /* Hide scrollbar for dropdown */
 .no-scrollbar::-webkit-scrollbar {
