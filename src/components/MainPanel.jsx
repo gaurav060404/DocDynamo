@@ -3,6 +3,10 @@ import RoleSelector from "./RoleSelector";
 import { FaGraduationCap } from "react-icons/fa";
 import { IoIosSend } from "react-icons/io";
 import brainIcon from "../assets/brain.svg";
+import questions from "../assets/questions.svg";
+import concepts from "../assets/concepts.svg";
+import info from "../assets/info.svg";
+import mindmap from "../assets/mindmap.svg";
 
 export default function MainPanel({ theme, toggleTheme }) {
   const [role, setRole] = useState({
@@ -84,7 +88,7 @@ export default function MainPanel({ theme, toggleTheme }) {
         </p>
       </div>
       {/* Input Row */}
-      <div className="flex items-center bg-[#1f1f2e] rounded-2xl px-6 py-2 mt-10 w-full max-w-3xl shadow border border-gray-700 relative">
+      <div className="flex items-center bg-[#1f1f2e] rounded-2xl px-6 py-2 mt-10 w-full max-w-4xl shadow border border-gray-700 relative">
         <input
           type="text"
           value={input}
@@ -137,29 +141,34 @@ export default function MainPanel({ theme, toggleTheme }) {
       <div className="flex flex-wrap justify-center gap-4 mt-8 relative font-heading font-semibold">
         {[
           {
-            icon: "🧐 Questions",
+            svg: <img src={questions} alt="Questions Icon" className="h-6 w-6" />,
+            icon: "Questions",
             tooltip: "Ask AI generated questions about your document",
           },
           {
-            icon: "💡 Concepts",
+            svg: <img src={concepts} alt="Concepts Icon" className="h-6 w-6" />,
+            icon: "Concepts",
             tooltip: "Extract key concepts from your documents",
           },
           {
-            icon: "ℹ️ Add-on Info",
+            svg: <img src={info} alt="Info Icon" className="h-6 w-6" />,
+            icon: "Add-on Info",
             tooltip: "Get additional information & insights",
           },
           {
-            icon: "🧠 Mindmap",
+            svg: <img src={mindmap} alt="Mindmap Icon" className="h-6 w-6" />,
+            icon: "Mindmap",
             tooltip: "Visualize document as a mindmap",
           },
         ].map((btn, idx) => (
           <button
-            key={btn.icon}
-            className="relative group bg-[#2b2b40] hover:bg-[#3c3c56] text-white px-5 py-2 rounded-full transition"
+            key={idx}
+            className="relative group bg-[#2b2b40] hover:bg-[#3c3c56] text-white px-8 py-3 rounded-full transition flex items-center gap-2"
             onMouseMove={(e) => handleMouseMove(e, btn.tooltip)}
             onMouseLeave={handleMouseLeave}
           >
-            {btn.icon}
+            {btn.svg}
+            <span>{btn.icon}</span>
             {/* Tooltip */}
             {tooltip.show && tooltip.text === btn.tooltip && (
               <span

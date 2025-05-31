@@ -83,6 +83,7 @@ export default function Sidebar({ theme, toggleTheme }) {
             urls={urls}
             setUrls={setUrls}
             onProcessUrls={setProcessedUrls}
+            theme={theme}
           />
           {processedUrls.length > 0 && (
             <div className="mt-4 text-xs text-gray-400">

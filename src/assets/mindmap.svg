@@ -1,0 +1,235 @@
+<svg version="1.1" id="icons" style="padding-bottom: 2px;" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 64 64" height="35px" width="32px" style="enable-background:new 0 0 64 64"
+                        xml:space="preserve">
+                        <style>
+                            .st0 {
+                                display: none
+                            }
+
+                            .st1,
+                            .st2 {
+                                display: inline;
+                                fill: #d1d3d4
+                            }
+
+                            .st2 {
+                                fill: #fff
+                            }
+
+                            .st3 {
+                                fill: #f1f2f2
+                            }
+
+                            .st3,
+                            .st4,
+                            .st5 {
+                                display: inline
+                            }
+
+                            .st4 {
+                                fill: none;
+                                stroke: #414042;
+                                stroke-miterlimit: 10
+                            }
+
+                            .st5 {
+                                fill: #414042
+                            }
+
+                            .st6 {
+                                fill: none;
+                                stroke: #f5ab35;
+                                stroke-miterlimit: 10
+                            }
+
+                            .st6,
+                            .st7 {
+                                display: inline
+                            }
+
+                            .st8 {
+                                fill: #36d7b7
+                            }
+
+                            .st9 {
+                                fill: #86e7d4
+                            }
+
+                            .st10 {
+                                fill: #5edfc5
+                            }
+
+                            .st12 {
+                                display: inline;
+                                fill: #bcbec0
+                            }
+
+                            .st13,
+                            .st14,
+                            .st15 {
+                                display: inline;
+                                fill: #f5ab35
+                            }
+
+                            .st14,
+                            .st15 {
+                                fill: #36d7b7
+                            }
+
+                            .st15 {
+                                fill: #5edfc5
+                            }
+
+                            .st16 {
+                                fill: #29a189
+                            }
+
+                            .st17 {
+                                fill: none;
+                                stroke: #414042;
+                                stroke-miterlimit: 10
+                            }
+
+                            .st18,
+                            .st19 {
+                                display: inline
+                            }
+
+                            .st18 {
+                                fill: none;
+                                stroke: #414042;
+                                stroke-miterlimit: 10;
+                                stroke-dasharray: 1
+                            }
+
+                            .st19 {
+                                fill: #e6e7e8
+                            }
+
+                            .st20 {
+                                fill: #f1f2f2
+                            }
+
+                            .st21 {
+                                fill: #fff
+                            }
+
+                            .st22 {
+                                fill: #f5ab35
+                            }
+
+                            .st23 {
+                                fill: #f9cd86
+                            }
+
+                            .st24,
+                            .st25,
+                            .st26 {
+                                display: inline;
+                                fill: #29a189
+                            }
+
+                            .st25,
+                            .st26 {
+                                fill: #f9cd86
+                            }
+
+                            .st26 {
+                                fill: #f7bc5d
+                            }
+
+                            .st27 {
+                                fill: #bcbec0
+                            }
+
+                            .st28 {
+                                fill: #e6e7e8
+                            }
+
+                            .st29 {
+                                fill: #939598
+                            }
+
+                            .st30 {
+                                display: inline;
+                                fill: #a7a9ac
+                            }
+
+                            .st31 {
+                                fill: #58595b
+                            }
+
+                            .st32 {
+                                fill: #414042
+                            }
+
+                            .st35 {
+                                fill: #d1d3d4
+                            }
+
+                            .st36 {
+                                fill: #a7a9ac
+                            }
+
+                            .st39 {
+                                fill: #f7bc5d
+                            }
+                        </style>
+                        <g id="XMLID_1215_">
+                            <path id="XMLID_1261_" class="st17"
+                                d="M44.4 13.4c0 .8-1.7.8-1.7 1.7 0 .8 1.7.8 1.7 1.7 0 .8-1.7.8-1.7 1.7 0 .8 1.7.8 1.7 1.7" />
+                            <path id="XMLID_1260_" class="st17"
+                                d="M17.5 21.9c0 .7-1.4.7-1.4 1.4s1.4.7 1.4 1.4-1.4.7-1.4 1.4 1.4.7 1.4 1.4" />
+                            <g id="XMLID_1213_">
+                                <path id="XMLID_1279_" class="st35"
+                                    d="M35.7 17s3.1.6 3.2 3.1c0 0 2.8.5 2 3.9 0 0 2.1 1.6 1.5 5.3 0 0 2.9 2-.3 4.9v.3s.4 2.4-2.4 4.5c0 0-1.2 1-3.1 3.3-.9 1.1-3.9 2.4-5.4-2V17.8s1.9-3.7 4.5-.8z" />
+                                <path id="XMLID_1278_" class="st8"
+                                    d="M26.2 17s-3.1.6-3.2 3.1c0 0-2.8.5-2 3.9 0 0-2.1 1.6-1.5 5.3 0 0-2.9 2 .3 4.9v.3s-.4 2.4 2.4 4.5c0 0 1.2 1 3.1 3.3.9 1.1 3.9 2.4 5.4-2V17.8c-.1 0-2-3.7-4.5-.8z" />
+                                <path id="XMLID_1277_" class="st17"
+                                    d="M39.3 25.8c-.7.5-1.5.6-2.3.5-.8-.1-1.5-.6-1.9-1.3-.5-.7-.6-1.5-.5-2.3" />
+                                <path id="XMLID_1276_" class="st17"
+                                    d="M36.9 33.6c-.7.5-1.5.6-2.3.5-.8-.1-1.5-.6-1.9-1.3-.5-.7-.6-1.5-.5-2.3" />
+                                <path id="XMLID_1274_" class="st17"
+                                    d="M34.7 29.4c-.5-.6-.8-1.4-.7-2.2.1-.8.5-1.6 1.1-2" />
+                                <path id="XMLID_1273_" class="st17"
+                                    d="M40.1 33.1c-.3-.7-.8-1.4-1.5-1.7-.8-.4-1.6-.4-2.4-.2" />
+                                <path id="XMLID_1272_" class="st17" d="M36.7 21.7c-.6-.5-1-1.3-1-2.1s.3-1.6.8-2.2" />
+                                <path id="XMLID_1271_" class="st17"
+                                    d="M32.8 21.8c.8 0 1.5-.3 2.1-.9.6-.6.9-1.4.9-2.1" />
+                                <path id="XMLID_1268_" class="st17"
+                                    d="M22.6 25.8c.7.5 1.5.6 2.3.5.8-.1 1.5-.6 1.9-1.3.5-.7.6-1.5.5-2.3" />
+                                <path id="XMLID_1267_" class="st17"
+                                    d="M25 33.6c.7.5 1.5.6 2.3.5.8-.1 1.5-.6 1.9-1.3.5-.7.6-1.5.5-2.3" />
+                                <path id="XMLID_1265_" class="st17"
+                                    d="M27.2 29.4c.5-.6.8-1.4.7-2.2-.1-.8-.5-1.6-1.1-2" />
+                                <path id="XMLID_1264_" class="st17"
+                                    d="M21.8 33.1c.3-.7.8-1.4 1.5-1.7.8-.4 1.6-.4 2.3-.1" />
+                                <path id="XMLID_1263_" class="st17" d="M25.1 21.7c.6-.5 1-1.3 1-2.1s-.3-1.6-.8-2.2" />
+                                <path id="XMLID_1262_" class="st17"
+                                    d="M29.1 21.8c-.8 0-1.5-.3-2.1-.9-.6-.6-.9-1.4-.9-2.1" />
+                            </g>
+                            <g id="XMLID_1250_">
+                                <path id="XMLID_1254_" class="st17" d="M17.5 14.8H19" />
+                                <path id="XMLID_1253_" class="st17" d="M21.4 14.8h1.5" />
+                                <path id="XMLID_1252_" class="st17" d="M20.2 17.4v-1.5" />
+                                <path id="XMLID_1251_" class="st17" d="M20.2 13.6v-1.5" />
+                            </g>
+                            <g id="XMLID_1233_">
+                                <path id="XMLID_1238_" class="st17" d="M31.4 12.8h.8" />
+                                <path id="XMLID_1237_" class="st17" d="M33.5 12.8h.9" />
+                                <path id="XMLID_1236_" class="st17" d="M32.9 14.3v-.9" />
+                                <path id="XMLID_1234_" class="st17" d="M32.9 12.1v-.9" />
+                            </g>
+                            <g id="XMLID_1223_">
+                                <path id="XMLID_1227_" class="st17" d="M44 24.6h.9" />
+                                <path id="XMLID_1226_" class="st17" d="M46.2 24.6h.9" />
+                                <path id="XMLID_1225_" class="st17" d="M45.5 26.1v-.8" />
+                                <path id="XMLID_1224_" class="st17" d="M45.5 23.9v-.8" />
+                            </g>
+                            <path id="XMLID_1212_" class="st39" d="M15 31.3h32.1v21.4H15z" />
+                            <path id="XMLID_1219_" class="st22" d="M46 31.3v20.5H15v1h32V31.3z" />
+                            <path id="XMLID_1220_" class="st23" d="M15 31.3h1v21.4h-1z" />
+                            <path id="XMLID_1231_" style="fill:#b88028" d="M15 31.3v.6l1.5 4.1H47v-4.1l-.2-.6z" />
+                            <path id="XMLID_1214_" class="st39" d="M49 34.5H17l-2-3.2h32z" />
+                        </g>
+                    </svg>
