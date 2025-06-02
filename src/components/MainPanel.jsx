@@ -141,29 +141,29 @@ export default function MainPanel({ theme, toggleTheme }) {
       <div className="flex flex-wrap justify-center gap-4 mt-8 relative font-heading font-semibold">
         {[
           {
-            svg: <img src={questions} alt="Questions Icon" className="h-6 w-6" />,
+            svg: <img src={questions} alt="Questions Icon" className="h-7 w-7" />,
             icon: "Questions",
             tooltip: "Ask AI generated questions about your document",
           },
           {
-            svg: <img src={concepts} alt="Concepts Icon" className="h-6 w-6" />,
+            svg: <img src={concepts} alt="Concepts Icon" className="h-5 w-5" />,
             icon: "Concepts",
             tooltip: "Extract key concepts from your documents",
           },
           {
-            svg: <img src={info} alt="Info Icon" className="h-6 w-6" />,
+            svg: <img src={info} alt="Info Icon" className="h-6 w-7" />,
             icon: "Add-on Info",
             tooltip: "Get additional information & insights",
           },
           {
-            svg: <img src={mindmap} alt="Mindmap Icon" className="h-6 w-6" />,
+            svg: <img src={mindmap} alt="Mindmap Icon" className="h-8 w-9" />,
             icon: "Mindmap",
             tooltip: "Visualize document as a mindmap",
           },
         ].map((btn, idx) => (
           <button
             key={idx}
-            className="relative group bg-[#2b2b40] hover:bg-[#3c3c56] text-white px-8 py-3 rounded-full transition flex items-center gap-2"
+            className="relative group bg-[#2b2b40] hover:bg-[#3c3c56] text-white px-8 py-2 rounded-full transition flex items-center gap-2"
             onMouseMove={(e) => handleMouseMove(e, btn.tooltip)}
             onMouseLeave={handleMouseLeave}
           >
