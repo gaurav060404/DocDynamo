@@ -1,4 +1,16 @@
+import axios from "axios";
+
 export default function WebSearchBox({ urls, setUrls, onProcessUrls , theme }) {
+
+  const pdfUrls = async(urlsToSend)=>{
+    try {
+      const res = await axios.post("https://doc-react-backend-cndfe0bqcbhbg9dc.centralindia-01.azurewebsites.net/process_urls",{urls : urlsToSend});
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const handleUrlChange = (idx, value) => {
     const newUrls = [...urls];
     newUrls[idx] = value;
@@ -6,12 +18,15 @@ export default function WebSearchBox({ urls, setUrls, onProcessUrls , theme }) {
   };
 
   const handleAddUrl = () => {
-    setUrls([...urls, '']);
+    if (urls.length < 5) {
+      setUrls([...urls, '']);
+    }
   };
 
   const handleProcess = () => {
     const cleaned = urls.filter(url => url.trim() !== '');
     onProcessUrls(cleaned);
+    pdfUrls(cleaned);
   };
 
   return (
@@ -29,6 +44,7 @@ export default function WebSearchBox({ urls, setUrls, onProcessUrls , theme }) {
       <button
         className={`flex items-center gap-2 ${theme == 'dark' ? 'bg-[#0e1328] text-text' : 'bg-[#2A4DCB] text-white'} border border-accent px-3 py-2 rounded font-medium hover:bg-accent/30 transition`}
         onClick={handleAddUrl}
+        disabled={urls.length >= 5}
       >
         <span>➕</span> Add Another URL
       </button>
@@ -39,6 +55,9 @@ export default function WebSearchBox({ urls, setUrls, onProcessUrls , theme }) {
       >
         <span role="img" aria-label="rocket">🚀</span> Process URLs
       </button>
+      {urls.length >= 5 && (
+        <span className="text-xs text-red-500 mt-1">Maximum 5 URLs allowed.</span>
+      )}
     </div>
   );
 }

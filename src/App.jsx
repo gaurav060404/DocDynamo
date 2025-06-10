@@ -7,6 +7,9 @@ document.documentElement.setAttribute("data-theme", "dark");
 
 export default function App() {
   const [theme, setTheme] = useState("dark");
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [filesProcessed, setFilesProcessed] = useState(false);
+  const [reset, setReset] = useState(false);
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
@@ -16,9 +19,23 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen text-text bg-background">
-      <Sidebar theme={theme} toggleTheme={toggleTheme} />
+      <Sidebar
+        theme={theme}
+        toggleTheme={toggleTheme}
+        uploadedFiles={uploadedFiles}
+        setUploadedFiles={setUploadedFiles}
+        filesProcessed={filesProcessed}
+        setFilesProcessed={setFilesProcessed}
+        setReset={setReset}
+      />
       <div className="flex flex-col flex-1 overflow-y-auto">
-        <MainPanel theme={theme} toggleTheme={toggleTheme} />
+        <MainPanel
+          theme={theme}
+          toggleTheme={toggleTheme}
+          uploadedFiles={uploadedFiles}
+          filesProcessed={filesProcessed}
+          reset={reset}
+        />
         <Footer theme={theme} toggleTheme={toggleTheme} />
       </div>
     </div>

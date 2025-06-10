@@ -1,15 +1,21 @@
 import { useState } from 'react';
+import axios from 'axios';
 import UploadBox from './UploadBox';
 import ProcessedFileList from './ProccesedFileList';
 import WebSearchBox from './WebSearchBox';
+import { IoMdMenu, IoMdClose } from "react-icons/io";
 
-export default function Sidebar({ theme, toggleTheme }) {
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+export default function Sidebar({
+  theme, toggleTheme,
+  uploadedFiles, setUploadedFiles,
+  filesProcessed, setFilesProcessed,
+  setReset
+}) {
   const [processedFiles, setProcessedFiles] = useState([]);
   const [activeTab, setActiveTab] = useState('file');
   const [processedUrls, setProcessedUrls] = useState([]);
   const [urls, setUrls] = useState(['']);
-  const [filesProcessed, setFilesProcessed] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // For mobile
 
   // Called when files are dropped/selected
   const handleFilesSelected = (files) => {
@@ -24,16 +30,38 @@ export default function Sidebar({ theme, toggleTheme }) {
     setFilesProcessed(true);
   };
 
-  const handleReset = () => {
-    setUploadedFiles([]);
-    setProcessedFiles([]);
-    setProcessedUrls([]);
-    setUrls(['']);
-    setFilesProcessed(false);
+  // Called when user clicks "Reset Session"
+  const handleReset = async () => {
+    try {
+      // Make a POST request to reset the session
+      await axios.post("https://doc-react-backend-cndfe0bqcbhbg9dc.centralindia-01.azurewebsites.net/start_over");
+      console.log("Session reset successfully.");
+
+      // Clear local state after successful reset
+      setUploadedFiles([]);
+      setProcessedFiles([]);
+      setProcessedUrls([]);
+      setUrls(['']);
+      setFilesProcessed(false);
+      setReset(true);
+    } catch (err) {
+      console.error("Failed to reset session:", err.response?.data || err.message);
+    }
   };
 
-  return (
-    <div className={`w-[430px] ${theme == "dark" ? 'bg-[#080a15]' : 'bg-[#e5e7ee]'}  shadow-md p-8 flex flex-col text-text`}>
+  // Sidebar content as a separate variable for reuse
+  const sidebarContent = (
+    <div className={`fixed w-[90vw] max-w-[430px] h-full md:h-screen bg-white ${theme == 'dark'? 'dark:bg-[#080a15]' : 'bg-[#e5e7ee]'} shadow-md p-8 flex flex-col text-text fixed md:static top-0 left-0 z-40 transition-transform duration-300
+      ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0
+    `}>
+      {/* Close button for mobile */}
+      <button
+        className="md:hidden absolute top-4 right-4 text-2xl"
+        onClick={() => setSidebarOpen(false)}
+        aria-label="Close sidebar"
+      >
+        <IoMdClose />
+      </button>
       <h2 className='font-heading text-2xl font-semibold mb-8 text-center'>Upload Documents</h2>
 
       <div className="flex gap-5 justify-center mb-8 font-heading font-semibold">
@@ -100,10 +128,37 @@ export default function Sidebar({ theme, toggleTheme }) {
 
       <button
         onClick={handleReset}
-        className={`mt-auto ${ theme == 'dark' ? 'hover:text-white text-gray-400'  : 'hover:text-primary'} text-sm transition font-body font-semibold`}
+        className={`mt-auto ${theme == 'dark' ? 'hover:text-white text-gray-400' : 'hover:text-primary'} text-sm transition font-body font-semibold`}
       >
         🔁 Reset Session
       </button>
     </div>
+  );
+
+  return (
+    <>
+      {/* Hamburger menu for mobile */}
+      <button
+        className="fixed top-4 left-4 z-50 md:hidden bg-white/80 dark:bg-[#080a15]/80 p-2 rounded-full shadow"
+        onClick={() => setSidebarOpen(true)}
+        aria-label="Open sidebar"
+      >
+        <IoMdMenu size={28} />
+      </button>
+      {/* Sidebar: hidden on mobile unless open, always visible on md+ */}
+      <div>
+        {/* Overlay for mobile when sidebar is open */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black/30 z-30 md:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+        {/* Sidebar content */}
+        <div className="md:block">
+          {sidebarContent}
+        </div>
+      </div>
+    </>
   );
 }

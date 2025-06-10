@@ -49,11 +49,11 @@ export default function UploadBox({ onFilesSelected, onProcessFiles }) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-4">
+    <div className="flex flex-col justify-center items-center mt-4 w-full">
       <div
         className={`border-2 ${
           dragActive ? "border-accent" : "border-primary"
-        } hover:border-accent hover:bg-box rounded-md p-6 mb-4 text-center h-[250px] w-[350px] bg-background transition-colors duration-200 flex flex-col justify-center items-center relative`}
+        } hover:border-accent hover:bg-box rounded-md p-4 sm:p-6 mb-4 text-center h-[200px] sm:h-[250px] w-full max-w-xs sm:max-w-sm md:max-w-md bg-background transition-colors duration-200 flex flex-col justify-center items-center relative`}
         onDragEnter={handleDrag}
         onDragOver={handleDrag}
         onDragLeave={handleDrag}
@@ -61,9 +61,11 @@ export default function UploadBox({ onFilesSelected, onProcessFiles }) {
         onClick={() => inputRef.current.click()}
         style={{ cursor: "pointer" }}
       >
-        <FiUploadCloud className="text-6xl text-primary mx-auto mb-4" />
-        <p className="text-xl text-text font-heading font-semibold mb-1">Drop files here</p>
-        <p className="text-lg font-heading font-semibold">
+        <FiUploadCloud className="text-5xl sm:text-6xl text-primary mx-auto mb-3 sm:mb-4" />
+        <p className="text-lg sm:text-xl text-text font-heading font-semibold mb-1">
+          Drop files here
+        </p>
+        <p className="text-base sm:text-lg font-heading font-semibold">
           or{" "}
           <span
             className="text-accent cursor-pointer"
@@ -75,7 +77,10 @@ export default function UploadBox({ onFilesSelected, onProcessFiles }) {
             browse
           </span>
         </p>
-        <p className="text-gray-400 mt-2 text-sm font-body">( Maximum 5 Files )</p>
+        <p className="text-gray-400 mt-2 text-xs sm:text-sm font-body">
+          {" "}
+          ( Maximum 5 Files )
+        </p>
         <input
           type="file"
           multiple
@@ -99,11 +104,14 @@ export default function UploadBox({ onFilesSelected, onProcessFiles }) {
         )}
       </div>
       <button
-        className="mt-3 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white px-4 py-2 w-4/5 rounded flex items-center justify-center gap-2 font-semibold transition cursor-pointer"
+        className="mt-3 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white px-4 py-2 w-full sm:w-4/5 rounded flex items-center justify-center gap-2 font-semibold transition cursor-pointer"
         disabled={files.length === 0}
         onClick={handleProcess}
       >
-        <span role="img" aria-label="rocket">🚀</span> Process Files
+        <span role="img" aria-label="rocket">
+          🚀
+        </span>{" "}
+        Process Files
       </button>
     </div>
   );
