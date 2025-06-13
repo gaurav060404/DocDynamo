@@ -33,7 +33,6 @@ export default function Sidebar({
   // Called when user clicks "Reset Session"
   const handleReset = async () => {
     try {
-      // Make a POST request to reset the session
       await axios.post("https://doc-react-backend-cndfe0bqcbhbg9dc.centralindia-01.azurewebsites.net/start_over");
       console.log("Session reset successfully.");
 
@@ -49,7 +48,6 @@ export default function Sidebar({
     }
   };
 
-  // Sidebar content as a separate variable for reuse
   const sidebarContent = (
     <div className={`fixed w-[90vw] max-w-[430px] h-full md:h-screen bg-white ${theme == 'dark'? 'dark:bg-[#080a15]' : 'bg-[#e5e7ee]'} shadow-md p-8 flex flex-col text-text fixed md:static top-0 left-0 z-40 transition-transform duration-300
       ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0

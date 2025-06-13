@@ -31,7 +31,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
     setQuestionsResult(null);
     try {
       const res = await axios.post(
-        "https://doc-react-backend-cndfe0bqcbhbg9dc.centralindia-01.azurewebsites.net/generate_questions"
+        `${import.meta.env.VITE_URL}/generate_questions`
       );
       setQuestionsResult(res.data);
     } catch (err) {
@@ -47,7 +47,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
     setConceptsResult(null);
     try {
       const res = await axios.post(
-        "https://doc-react-backend-cndfe0bqcbhbg9dc.centralindia-01.azurewebsites.net/generate_concepts"
+        `${import.meta.env.VITE_URL}/generate_concepts`
       );
       setConceptsResult(res.data);
     } catch (err) {
@@ -69,7 +69,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
 
     try {
       const res = await axios.post(
-        "https://doc-react-backend-cndfe0bqcbhbg9dc.centralindia-01.azurewebsites.net/api/query",
+        `${import.meta.env.VITE_URL}/api/query`,
         formData,
         {
           headers: {
@@ -180,11 +180,11 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
         <div className="mt-4 text-red-500 font-heading font-semibold">{queryError}</div>
       )}
       {queryResult && (
-        <div className="mt-4 bg-[#1e1e3f] text-white rounded-lg p-6 w-full max-w-4xl shadow font-heading">
+        <div className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
             <span className="text-2xl">📘</span> Response
           </h3>
-          <div className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
+          <div className="text-sm text-text-300 leading-relaxed whitespace-pre-line">
             {typeof queryResult === "string"
               ? queryResult.split("\n").map((line, idx) => <p key={idx}>{line}</p>)
               : queryResult?.response?.split("\n").map((line, idx) => <p key={idx}>{line}</p>)}
@@ -193,11 +193,11 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
       )}
       {/* Add-On Result */}
       {showAdditionalInfo && queryResult?.additional_info && (
-        <div className="mt-4 bg-[#1e1e3f] text-white rounded-lg p-6 w-full max-w-4xl shadow font-heading">
+        <div className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-yellow-400 flex items-center gap-2">
             <span className="text-2xl">📝</span> Add-on Info
           </h3>
-          <div className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
+          <div className="text-sm text-text-300 leading-relaxed whitespace-pre-line">
             {queryResult.additional_info.split("\n").map((line, idx) => (
               <p key={idx}>{line}</p>
             ))}
@@ -212,11 +212,11 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
         <div className="mt-4 text-red-500 font-heading font-semibold">{conceptsError}</div>
       )}
       {conceptsResult && Array.isArray(conceptsResult.concepts) && (
-        <div className="mt-4 bg-[#1e1e3f] text-white rounded-lg p-6 w-full max-w-4xl shadow font-heading">
+        <div className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
             <span className="text-2xl">🟦</span> Key Concepts
           </h3>
-          <ul className="space-y-4 text-sm text-gray-300 leading-relaxed">
+          <ul className="space-y-4 text-sm text-text-300 leading-relaxed">
             {conceptsResult.concepts.map((item, index) => {
               const cleaned = item.replace(/\*\*/g, '');
               const split = cleaned.split(':');
@@ -225,7 +225,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
 
               return (
                 <li key={index}>
-                  <span className="font-bold text-white">{title}</span>: {description}
+                  <span className="font-bold text-text">{title}</span>: {description}
                 </li>
               );
             })}
@@ -240,11 +240,11 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
         <div className="mt-4 text-red-500 font-heading font-semibold">{questionsError}</div>
       )}
       {questionsResult && Array.isArray(questionsResult.questions) && questionsResult.questions.length > 0 && (
-        <div className="mt-4 bg-[#1e1e3f] text-white rounded-lg p-6 w-full max-w-4xl shadow font-heading">
+        <div className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
             <span className="text-2xl">❓</span> Generated Questions
           </h3>
-          <div className="space-y-4 text-sm text-gray-300 leading-relaxed">
+          <div className="space-y-4 text-sm text-text-300 leading-relaxed">
             {(() => {
               // Group questions and answers together
               const items = questionsResult.questions;
@@ -276,7 +276,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
                 return (
                   <div key={idx} className="mb-3">
                     <div>
-                      <span className="font-bold text-white">{entry.question.replace(/^Q(\d+)([:：])/, 'Question $1:')}</span>
+                      <span className="font-bold text-text">{entry.question.replace(/^Q(\d+)([:：])/, 'Question $1:')}</span>
                     </div>
                     {entry.answer && (
                       <div className="ml-mt-1">{entry.answer}</div>
