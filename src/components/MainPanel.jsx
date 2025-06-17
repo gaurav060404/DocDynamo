@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import RoleSelector from "./RoleSelector";
 import { FaGraduationCap } from "react-icons/fa";
 import { IoIosSend } from "react-icons/io";
@@ -7,6 +7,11 @@ import questions from "../assets/questions.svg";
 import concepts from "../assets/concepts.svg";
 import info from "../assets/info.svg";
 import mindmap from "../assets/mindmap.svg";
+import relatedVideos from '../assets/videos.svg';
+import response from '../assets/response.svg';
+import generatedQuestions from '../assets/genques.svg';
+import keyConcepts from '../assets/keyconcepts.svg';
+import addOnInfo from '../assets/addon.svg';
 import axios from "axios";
 
 export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProcessed, reset, setReset }) {
@@ -24,6 +29,37 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
   const [queryLoading, setQueryLoading] = useState(false);
   const [queryError, setQueryError] = useState("");
   const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
+  const [ytRecommendations, setYtRecommendations] = useState([]);
+  const queryRef = useRef(null);
+  const conceptsRef = useRef(null);
+  const questionsRef = useRef(null);
+  const addonRef = useRef(null);
+
+  console.log(ytRecommendations);
+
+  useEffect(() => {
+    if (queryResult && queryRef.current) {
+      queryRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [queryResult]);
+
+  useEffect(() => {
+    if (conceptsResult && conceptsRef.current) {
+      conceptsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [conceptsResult]);
+
+  useEffect(() => {
+    if (questionsResult && questionsRef.current) {
+      questionsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [questionsResult]);
+
+  useEffect(() => {
+    if (showAdditionalInfo && addonRef.current) {
+      addonRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [showAdditionalInfo]);
 
   const handleQuestions = async () => {
     setQuestionsLoading(true);
@@ -77,10 +113,21 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
           },
         }
       );
-      console.log(res.data);
       setQueryResult(res.data);
+
+      // Store YouTube URLs and thumbnails in state
+      if (res.data && Array.isArray(res.data.recommendations)) {
+        const recommendations = res.data.recommendations.map(rec => ({
+          url: `https://www.youtube.com/watch?v=${rec.video_id}`,
+          thumbnail: rec.thumbnail_url,
+        }));
+        setYtRecommendations(recommendations);
+      } else {
+        setYtRecommendations([]);
+      }
     } catch (err) {
       setQueryError(err.response?.data?.error || "Failed to fetch query results.");
+      setYtRecommendations([]);
     } finally {
       setQueryLoading(false);
     }
@@ -127,7 +174,12 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
       setInputWarning("");
       setConceptsResult(null);
       setConceptsError("");
-      // Add any other state resets you need here
+      setQueryResult(null);
+      setQueryError("");
+      setQuestionsResult(null);
+      setQuestionsError("");
+      setShowAdditionalInfo(false);
+      setYtRecommendations([]); // Clear YouTube recommendations
 
       // Reset the reset flag in parent
       if (setReset) setReset(false);
@@ -180,9 +232,9 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
         <div className="mt-4 text-red-500 font-heading font-semibold">{queryError}</div>
       )}
       {queryResult && (
-        <div className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
+        <div ref={queryRef} className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
-            <span className="text-2xl">📘</span> Response
+            <span className="text-2xl pt-1"><img src={response} alt="Related Videos" className="h-8 w-8" /></span> Response
           </h3>
           <div className="text-sm text-text-300 leading-relaxed whitespace-pre-line">
             {typeof queryResult === "string"
@@ -193,9 +245,9 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
       )}
       {/* Add-On Result */}
       {showAdditionalInfo && queryResult?.additional_info && (
-        <div className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
-          <h3 className="text-xl font-bold mb-4 text-yellow-400 flex items-center gap-2">
-            <span className="text-2xl">📝</span> Add-on Info
+        <div ref={addonRef} className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
+          <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
+            <span className="text-2xl"><img src={addOnInfo} alt="Related Videos" className="h-8 w-8" /></span> Add-on Info
           </h3>
           <div className="text-sm text-text-300 leading-relaxed whitespace-pre-line">
             {queryResult.additional_info.split("\n").map((line, idx) => (
@@ -212,9 +264,9 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
         <div className="mt-4 text-red-500 font-heading font-semibold">{conceptsError}</div>
       )}
       {conceptsResult && Array.isArray(conceptsResult.concepts) && (
-        <div className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
+        <div ref={conceptsRef} className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
-            <span className="text-2xl">🟦</span> Key Concepts
+            <span className="text-2xl"><img src={keyConcepts} alt="Related Videos" className="h-8 w-8" /></span> Key Concepts
           </h3>
           <ul className="space-y-4 text-sm text-text-300 leading-relaxed">
             {conceptsResult.concepts.map((item, index) => {
@@ -240,9 +292,9 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
         <div className="mt-4 text-red-500 font-heading font-semibold">{questionsError}</div>
       )}
       {questionsResult && Array.isArray(questionsResult.questions) && questionsResult.questions.length > 0 && (
-        <div className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
+        <div ref={questionsRef} className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
-            <span className="text-2xl">❓</span> Generated Questions
+            <span className="text-2xl"><img src={generatedQuestions} alt="Related Videos" className="h-8 w-8" /></span> Generated Questions
           </h3>
           <div className="space-y-4 text-sm text-text-300 leading-relaxed">
             {(() => {
@@ -397,6 +449,41 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
           </button>
         ))}
       </div>
+
+      {/* YouTube Recommendations */}
+      {ytRecommendations.length > 0 && (
+        <div className="w-full max-w-4xl mt-10">
+          <h3 className="text-2xl font-bold mb-6 flex items-center gap-2 text-text">
+            <span role="img" aria-label="video" className="text-2xl pt-1">
+              <img src={relatedVideos} alt="Related Videos" className="h-8 w-8" />
+            </span>
+            Related Videos
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {ytRecommendations.map((rec, idx) => (
+              <a
+                key={idx}
+                href={rec.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative rounded-xl overflow-hidden shadow-lg bg-[#181824] hover:scale-[1.03] transition-transform duration-200"
+              >
+                <img
+                  src={rec.thumbnail}
+                  alt={`YouTube video ${idx + 1}`}
+                  className="w-full h-40 object-cover group-hover:brightness-90 transition"
+                />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 p-2 flex items-center justify-center shadow-lg">
+                  <svg height="45px" width="30px" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon fill="#FFFFFF" points="187.368,146.928 187.368,355.8 382.992,251.368" />
+                    <path fill="#602dd7" d="M256,0.376C114.616,0.376,0,114.824,0,256s114.616,255.624,256,255.624S512,397.176,512,256 S397.384,0.376,256,0.376z M184.496,146.928l195.624,104.44L184.496,355.8V146.928z" />
+                  </svg>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

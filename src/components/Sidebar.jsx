@@ -33,9 +33,7 @@ export default function Sidebar({
   // Called when user clicks "Reset Session"
   const handleReset = async () => {
     try {
-      await axios.post("https://doc-react-backend-cndfe0bqcbhbg9dc.centralindia-01.azurewebsites.net/start_over");
-      console.log("Session reset successfully.");
-
+      await axios.post(`${import.meta.env.VITE_URL}/start_over`);
       // Clear local state after successful reset
       setUploadedFiles([]);
       setProcessedFiles([]);
@@ -49,7 +47,7 @@ export default function Sidebar({
   };
 
   const sidebarContent = (
-    <div className={`fixed w-[90vw] max-w-[430px] h-full md:h-screen bg-white ${theme == 'dark'? 'dark:bg-[#080a15]' : 'bg-[#e5e7ee]'} shadow-md p-8 flex flex-col text-text fixed md:static top-0 left-0 z-40 transition-transform duration-300
+    <div className={`fixed left-0 top-0 w-[90vw] max-w-[430px] h-screen bg-white ${theme == 'dark'? 'dark:bg-[#080a15]' : 'bg-[#e5e7ee]'} shadow-md p-8 flex flex-col text-text z-40 transition-transform duration-300
       ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0
     `}>
       {/* Close button for mobile */}
@@ -64,7 +62,7 @@ export default function Sidebar({
 
       <div className="flex gap-5 justify-center mb-8 font-heading font-semibold">
         <button
-          className={`flex-1 p-3 rounded-md px-5 font-medium flex items-center justify-center gap-2 shadow-inner-sm ${
+          className={`border border-black flex-1 p-3 rounded-md px-5 font-medium flex items-center justify-center gap-2 shadow-inner-sm ${
             theme === "dark"
               ? activeTab === "file"
                 ? "bg-accent text-white"
@@ -78,7 +76,7 @@ export default function Sidebar({
           <span>📁</span> File Upload
         </button>
         <button
-          className={`flex-1 p-3 rounded-md px-5 font-medium flex items-center justify-center gap-2 shadow-inner-sm ${
+          className={`border border-black flex-1 p-3 rounded-md px-5 font-medium flex items-center justify-center gap-2 shadow-inner-sm ${
             theme === "dark"
               ? activeTab === "web"
                 ? "bg-accent text-white"
@@ -137,7 +135,7 @@ export default function Sidebar({
     <>
       {/* Hamburger menu for mobile */}
       <button
-        className="fixed top-4 left-4 z-50 md:hidden bg-white/80 dark:bg-[#080a15]/80 p-2 rounded-full shadow"
+        className="fixed top-4 left-4 z-50 md:hidden dark:bg-background bg-[#080a15]/80 p-2 rounded-full shadow"
         onClick={() => setSidebarOpen(true)}
         aria-label="Open sidebar"
       >

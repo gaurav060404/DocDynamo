@@ -18,7 +18,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex min-h-screen text-text bg-background">
+    <div className="flex h-screen text-text bg-background">
       <Sidebar
         theme={theme}
         toggleTheme={toggleTheme}
@@ -28,14 +28,17 @@ export default function App() {
         setFilesProcessed={setFilesProcessed}
         setReset={setReset}
       />
-      <div className="flex flex-col flex-1 overflow-y-auto">
-        <MainPanel
-          theme={theme}
-          toggleTheme={toggleTheme}
-          uploadedFiles={uploadedFiles}
-          filesProcessed={filesProcessed}
-          reset={reset}
-        />
+      <div className="flex flex-col flex-1 h-screen md:ml-[430px]">
+        <div className="flex-1 overflow-y-auto">
+          <MainPanel
+            theme={theme}
+            toggleTheme={toggleTheme}
+            uploadedFiles={uploadedFiles}
+            filesProcessed={filesProcessed}
+            reset={reset}
+            setReset={setReset}
+          />
+        </div>
         <Footer theme={theme} toggleTheme={toggleTheme} />
       </div>
     </div>
