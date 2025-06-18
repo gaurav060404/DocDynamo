@@ -234,7 +234,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
       {queryResult && (
         <div ref={queryRef} className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
-            <span className="text-2xl pt-1"><img src={response} alt="Related Videos" className="h-8 w-8" /></span> Response
+            <span className="text-2xl pt-1"><img src={response} alt="Response" className="h-8 w-8" /></span> Response
           </h3>
           <div className="text-sm text-text-300 leading-relaxed whitespace-pre-line">
             {typeof queryResult === "string"
@@ -247,7 +247,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
       {showAdditionalInfo && queryResult?.additional_info && (
         <div ref={addonRef} className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
-            <span className="text-2xl"><img src={addOnInfo} alt="Related Videos" className="h-8 w-8" /></span> Add-on Info
+            <span className="text-2xl"><img src={addOnInfo} alt="Add-on Info" className="h-8 w-8" /></span> Add-on Info
           </h3>
           <div className="text-sm text-text-300 leading-relaxed whitespace-pre-line">
             {queryResult.additional_info.split("\n").map((line, idx) => (
@@ -266,7 +266,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
       {conceptsResult && Array.isArray(conceptsResult.concepts) && (
         <div ref={conceptsRef} className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
-            <span className="text-2xl"><img src={keyConcepts} alt="Related Videos" className="h-8 w-8" /></span> Key Concepts
+            <span className="text-2xl"><img src={keyConcepts} alt="Key Concepts" className="h-8 w-8" /></span> Key Concepts
           </h3>
           <ul className="space-y-4 text-sm text-text-300 leading-relaxed">
             {conceptsResult.concepts.map((item, index) => {
@@ -294,7 +294,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
       {questionsResult && Array.isArray(questionsResult.questions) && questionsResult.questions.length > 0 && (
         <div ref={questionsRef} className="mt-4 bg-transparent text-text rounded-lg p-6 w-full max-w-4xl shadow font-heading">
           <h3 className="text-xl font-bold mb-4 text-blue-400 flex items-center gap-2">
-            <span className="text-2xl"><img src={generatedQuestions} alt="Related Videos" className="h-8 w-8" /></span> Generated Questions
+            <span className="text-2xl"><img src={generatedQuestions} alt="Generated Questions" className="h-8 w-8" /></span> Generated Questions
           </h3>
           <div className="space-y-4 text-sm text-text-300 leading-relaxed">
             {(() => {

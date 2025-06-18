@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { FiUploadCloud } from "react-icons/fi";
+import rocket from "../assets/rocket.svg";
 
 export default function UploadBox({ onFilesSelected, onProcessFiles }) {
   const [dragActive, setDragActive] = useState(false);
@@ -109,7 +110,7 @@ export default function UploadBox({ onFilesSelected, onProcessFiles }) {
         onClick={handleProcess}
       >
         <span role="img" aria-label="rocket">
-          🚀
+          <img src={rocket} alt="Proccess Files" className="h-5 w-5" />
         </span>{" "}
         Process Files
       </button>
