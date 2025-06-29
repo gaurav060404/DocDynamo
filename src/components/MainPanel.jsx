@@ -83,7 +83,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
     setConceptsResult(null);
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_URL}/generate_concepts`
+        `${process.env.VITE_URL}/generate_concepts`
       );
       setConceptsResult(res.data);
     } catch (err) {
