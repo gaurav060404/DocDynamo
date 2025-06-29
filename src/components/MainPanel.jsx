@@ -35,7 +35,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
   const questionsRef = useRef(null);
   const addonRef = useRef(null);
 
-  console.log(ytRecommendations);
+  console.log(import.meta.env.VITE_URL);
 
   useEffect(() => {
     if (queryResult && queryRef.current) {
@@ -83,7 +83,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
     setConceptsResult(null);
     try {
       const res = await axios.post(
-        `${process.env.VITE_URL}/generate_concepts`
+        `${import.meta.env.VITE_URL}/generate_concepts`
       );
       setConceptsResult(res.data);
     } catch (err) {
