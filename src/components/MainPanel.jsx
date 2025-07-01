@@ -13,8 +13,10 @@ import generatedQuestions from '../assets/genques.svg';
 import keyConcepts from '../assets/keyconcepts.svg';
 import addOnInfo from '../assets/addon.svg';
 import axios from "axios";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
-export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProcessed, reset, setReset }) {
+export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProcessed, reset, setReset, loggedIn, setLoggedIn, setShowLogin }) {
   const [role, setRole] = useState({
     label: "Student",
     icon: <FaGraduationCap />,
@@ -34,8 +36,6 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
   const conceptsRef = useRef(null);
   const questionsRef = useRef(null);
   const addonRef = useRef(null);
-
-  console.log(import.meta.env.VITE_URL);
 
   useEffect(() => {
     if (queryResult && queryRef.current) {
@@ -168,6 +168,15 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
     sendFilesAndQuestion();
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setLoggedIn(false);
+    } catch (error) {
+      console.error("Logout Error:", error);
+    }
+  };
+
   useEffect(() => {
     if (reset) {
       setInput("");
@@ -188,30 +197,34 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
 
   return (
     <div className="flex flex-col items-center justify-start px-2 sm:px-4 md:px-8 pt-8 sm:pt-12 w-full h-full text-text bg-background overflow-x-hidden">
-      {/* Theme Toggle Button */}
-      <button
-        className={`fixed top-4 right-4 sm:right-6 px-3 sm:px-4 py-2 rounded-full transition flex items-center gap-2 z-20 text-xs sm:text-base ${theme === "dark"
-          ? "bg-gradient-to-r from-gray-800 to-gray-700 text-white hover:from-gray-700 hover:to-gray-600"
-          : "bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-700 hover:to-blue-500"
-          }`}
-        onClick={toggleTheme}
-      >
-        {theme === "dark" ? (
-          <>
-            <span role="img" aria-label="moon">
-              🌙
-            </span>
-            Light Mode
-          </>
-        ) : (
-          <>
-            <span role="img" aria-label="sun">
-              ☀️
-            </span>
-            Dark Mode
-          </>
-        )}
-      </button>
+      {/* Theme Toggle and Login/Logout Button */}
+      <div className="fixed top-4 right-4 sm:right-6 flex gap-4 z-20">
+        <button
+          className={`px-3 sm:px-4 py-2 rounded-full transition flex items-center gap-2 text-xs sm:text-base ${theme === "dark"
+            ? "bg-gradient-to-r from-gray-800 to-gray-700 text-white hover:from-gray-700 hover:to-gray-600"
+            : "bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:bg-blue-700"
+            }`}
+          onClick={toggleTheme}
+        >
+          {theme === "dark" ? (
+            <>
+              <span role="img" aria-label="moon">🌙</span>
+              Light Mode
+            </>
+          ) : (
+            <>
+              <span role="img" aria-label="sun">☀️</span>
+              Dark Mode
+            </>
+          )}
+        </button>
+        <button
+          className="px-3 sm:px-4 py-2 rounded-full transition flex items-center gap-2 text-xs sm:text-base bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl"
+          onClick={loggedIn ? handleLogout : () => setShowLogin(true)}
+        >
+          {loggedIn ? "Logout" : "Login"}
+        </button>
+      </div>
 
       <div className="text-center mt-6">
         <h1 className="text-3xl sm:text-5xl md:text-[58px] font-heading font-bold text-accent flex justify-center items-center gap-2">
