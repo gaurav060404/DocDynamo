@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import RoleSelector from "./RoleSelector";
-import { FaGraduationCap } from "react-icons/fa";
+import { FaGraduationCap, FaUser, FaSignOutAlt } from "react-icons/fa";
 import { IoIosSend } from "react-icons/io";
 import brainIcon from "../assets/brain.svg";
 import questions from "../assets/questions.svg";
@@ -13,7 +13,7 @@ import generatedQuestions from '../assets/genques.svg';
 import keyConcepts from '../assets/keyconcepts.svg';
 import addOnInfo from '../assets/addon.svg';
 import axios from "axios";
-import { signOut } from "firebase/auth";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 
 export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProcessed, reset, setReset, loggedIn, setLoggedIn, setShowLogin }) {
@@ -21,6 +21,8 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
     label: "Student",
     icon: <FaGraduationCap />,
   });
+  const [user, setUser] = useState(null);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [conceptsResult, setConceptsResult] = useState(null);
   const [conceptsLoading, setConceptsLoading] = useState(false);
   const [conceptsError, setConceptsError] = useState("");
@@ -36,6 +38,62 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
   const conceptsRef = useRef(null);
   const questionsRef = useRef(null);
   const addonRef = useRef(null);
+  const profileDropdownRef = useRef(null);
+
+  // Generate AI avatar URL based on user data
+  const generateAIAvatar = (displayName, email) => {
+    const seed = displayName || email || 'guest';
+    // Using DiceBear API for AI-generated avatars
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,d1d4f9&radius=50`;
+  };
+
+  // Extract first name from display name
+  const getFirstName = (displayName) => {
+    if (!displayName) return 'Guest';
+    return displayName.split(' ')[0];
+  };
+
+  // Listen for authentication state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        const displayName = currentUser.displayName || 'Guest User';
+        const email = currentUser.email || '';
+        setUser({
+          displayName,
+          email,
+          photoURL: currentUser.photoURL || generateAIAvatar(displayName, email),
+        });
+      } else {
+        // Check localStorage for guest login
+        const loginState = JSON.parse(localStorage.getItem("loginState"));
+        if (loginState && loginState.loggedIn) {
+          setUser({
+            displayName: 'Guest User',
+            email: '',
+            photoURL: generateAIAvatar('Guest User', ''),
+          });
+        } else {
+          setUser(null);
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Close profile dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+        setShowProfileDropdown(false);
+      }
+    }
+    if (showProfileDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showProfileDropdown]);
 
   useEffect(() => {
     if (queryResult && queryRef.current) {
@@ -171,7 +229,10 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      localStorage.removeItem("loginState");
       setLoggedIn(false);
+      setUser(null);
+      setShowProfileDropdown(false);
     } catch (error) {
       console.error("Logout Error:", error);
     }
@@ -197,7 +258,7 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
 
   return (
     <div className="flex flex-col items-center justify-start px-2 sm:px-4 md:px-8 pt-8 sm:pt-12 w-full h-full text-text bg-background overflow-x-hidden">
-      {/* Theme Toggle and Login/Logout Button */}
+      {/* Theme Toggle and Profile */}
       <div className="fixed top-4 right-4 sm:right-6 flex gap-4 z-20">
         <button
           className={`px-3 sm:px-4 py-2 rounded-full transition flex items-center gap-2 text-xs sm:text-base ${theme === "dark"
@@ -218,12 +279,85 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
             </>
           )}
         </button>
-        <button
-          className="px-3 sm:px-4 py-2 rounded-full transition flex items-center gap-2 text-xs sm:text-base bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 shadow-lg hover:shadow-xl"
-          onClick={loggedIn ? handleLogout : () => setShowLogin(true)}
-        >
-          {loggedIn ? "Logout" : "Login"}
-        </button>
+        
+        {/* Profile Section */}
+        {loggedIn && user ? (
+          <div className="relative" ref={profileDropdownRef}>
+            <button
+              className="flex items-center gap-3 px-3 sm:px-4 py-2 rounded-full transition bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:from-purple-600 hover:to-purple-700 shadow-lg hover:shadow-xl"
+              onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+            >
+              {/* Profile Picture */}
+              <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-300 flex items-center justify-center">
+                <img 
+                  src={user.photoURL} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src = generateAIAvatar(user.displayName, user.email);
+                  }}
+                />
+              </div>
+              {/* Name (visible on larger screens) */}
+              <span className="hidden sm:block text-xs sm:text-sm font-medium truncate max-w-24">
+                {getFirstName(user.displayName)}
+              </span>
+              {/* Dropdown Arrow */}
+              <svg 
+                className={`w-4 h-4 transition-transform ${showProfileDropdown ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            
+            {/* Profile Dropdown */}
+            {showProfileDropdown && (
+              <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-30">
+                <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-300 flex items-center justify-center">
+                      <img 
+                        src={user.photoURL} 
+                        alt="Profile" 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = generateAIAvatar(user.displayName, user.email);
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                        {user.displayName || 'Guest User'}
+                      </p>
+                      {user.email && (
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                          {user.email}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <FaSignOutAlt />
+                  Sign Out
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button
+            className="px-3 sm:px-4 py-2 rounded-full transition flex items-center gap-2 text-xs sm:text-base bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl"
+            onClick={() => setShowLogin(true)}
+          >
+            Login
+          </button>
+        )}
       </div>
 
       <div className="text-center mt-6">

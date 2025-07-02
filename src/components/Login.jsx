@@ -17,7 +17,7 @@ export default function Login({ setLoggedIn, setShowLogin }) {
     try {
       setLoading(true);
       setError("");
-      const result = await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
       localStorage.setItem("loginState", JSON.stringify({ loggedIn: true, timestamp: Date.now() }));
       setLoggedIn(true);
       setShowLogin(false);
@@ -43,7 +43,7 @@ export default function Login({ setLoggedIn, setShowLogin }) {
     try {
       setLoading(true);
       setError("");
-      const result = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       localStorage.setItem("loginState", JSON.stringify({ loggedIn: true, timestamp: Date.now() }));
       setLoggedIn(true);
       setShowLogin(false);
@@ -83,7 +83,7 @@ export default function Login({ setLoggedIn, setShowLogin }) {
     try {
       setLoading(true);
       setError("");
-      const result = await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       localStorage.setItem("loginState", JSON.stringify({ loggedIn: true, timestamp: Date.now() }));
       setLoggedIn(true);
       setShowLogin(false);

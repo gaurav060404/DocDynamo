@@ -53,7 +53,7 @@ export default function RoleSelector({ selectedRole, onChange }) {
 
       {open && (
         <div
-          className="absolute mt-2 w-full bg-[#1e1e2e] border border-gray-700 rounded-md shadow z-10 max-h-[170px] overflow-y-auto no-scrollbar animate-fade-in"
+          className="absolute mt-2 w-full bg-[#1e1e2e] border border-gray-700 rounded-md shadow z-10 max-h-[170px] overflow-y-auto animate-fade-in custom-scrollbar"
           tabIndex={-1}
           role="listbox"
         >
