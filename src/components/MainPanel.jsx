@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import RoleSelector from "./RoleSelector";
-import { FaGraduationCap, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaGraduationCap,FaSignOutAlt } from "react-icons/fa";
 import { IoIosSend } from "react-icons/io";
 import brainIcon from "../assets/brain.svg";
 import questions from "../assets/questions.svg";
@@ -565,12 +565,13 @@ export default function MainPanel({ theme, toggleTheme, uploadedFiles, filesProc
             tooltip: "Get additional information & insights",
             onClick: () => setShowAdditionalInfo(!showAdditionalInfo),
           },
-          {
-            svg: <img src={mindmap} alt="Mindmap Icon" className="h-8 w-9" />,
-            icon: "Mindmap",
-            tooltip: "Visualize document as a mindmap",
-            onClick: undefined,
-          },
+          // Commented the mindmap button , because it is not implemented yet in the backend .
+          // {
+          //   svg: <img src={mindmap} alt="Mindmap Icon" className="h-8 w-9" />,
+          //   icon: "Mindmap",
+          //   tooltip: "Visualize document as a mindmap",
+          //   onClick: undefined,
+          // },
         ].map((btn, idx) => (
           <button
             key={idx}
